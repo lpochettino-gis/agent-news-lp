@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.pyo
+
+logs/
+output/
+interest_profile.json
+
+*.exe
+*.zip
+*.tmp
+*.log
+
+.agent_news_write_test
