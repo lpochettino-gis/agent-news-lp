@@ -5,6 +5,11 @@ __pycache__/
 logs/
 output/
 interest_profile.json
+backups/
+.venv/
+.env
+.env.*
+*.wav
 
 *.exe
 *.zip

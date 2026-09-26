@@ -1,67 +1,39 @@
-# Agent News para otra PC
+﻿# Agent News portable para Windows
 
-Esta carpeta contiene el ejecutable portable de Agent News.
+Esta guía corresponde a un paquete compilado con `build_exe.ps1`. El repositorio contiene el código fuente; no incluye un ejecutable actualizado.
 
-## Instalar
+## Preparar el paquete
+
+Con Python, PyInstaller y, opcionalmente, Pillow instalados, ejecutar:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\build_exe.ps1
+```
+
+El script genera la carpeta hermana `agent_news_dist` y reemplaza su contenido anterior. El ejecutable incluye el módulo `news_images.py`; Pillow permite comprimir las imágenes.
+
+## Instalar y ejecutar
 
 1. Copiar la carpeta completa `agent_news_dist` a la PC destino.
-2. Ejecutar `instalar_agent_news.cmd`.
-3. Windows registra la tarea programada `Agent News` para todos los dias a las 08:30.
+2. Ejecutar `instalar_agent_news.cmd` para registrar la tarea diaria a las 08:30.
+3. Ejecutar `AgentNews.exe` para generar y abrir el noticiario, o `AgentNews.exe --no-open` para generarlo sin abrir el navegador.
 
-El resumen se abre automaticamente al terminar, siempre que la PC este encendida, con sesion iniciada e internet disponible.
+La PC debe estar encendida, con sesión iniciada e Internet para buscar noticias nuevas. `AgentNews.exe --offline-demo --no-open` permite probar el diseño sin conexión.
 
-## Uso manual
+## Contenido
 
-Ejecutar:
+Siete secciones: Argentina, Energía y Recursos, Drones y Topografía, Software e IA, Tech y Hardware, Agro y Zona · Pasteur y región; más Trends. Hasta 56 noticias, con imágenes medianas del medio cuando están disponibles. La zona prioriza Pasteur, Lincoln, General Villegas y Pehuajó, con una cobertura editorial aproximada de 250 km.
 
-```powershell
-.\AgentNews.exe
-```
+La portada abre directamente en las noticias. No genera audio ni resumen ejecutivo. Los medios sin foto accesible se muestran con texto y enlace.
 
-Probar sin abrir navegador:
+## Archivos locales
 
-```powershell
-.\AgentNews.exe --no-open
-```
+- `output/agent_news_latest.html`: noticiario.
+- `output/images/`: imágenes descargadas.
+- `output/image_cache.json`: referencias de las fotos.
+- `interest_profile.json`: perfil manual de temas.
+- `logs/agent_news.log`: registro de ejecución.
 
-Regenerar perfil configurado:
+Si la carpeta del ejecutable no permite escritura, utiliza `%LOCALAPPDATA%\Agent News`. La ejecución no escanea archivos personales ni historial del navegador. Consulta fuentes públicas sin utilizar cookies, contraseñas o sesiones del navegador.
 
-```powershell
-.\AgentNews.exe --refresh-profile
-```
-
-## Tematicas configuradas
-
-Agent News usa una lista fija de tematicas propias:
-
-- Argentina
-- Petroleo
-- Gas
-- Litio
-- Drones
-- Equipamiento Topografico
-- Software SAAS
-- Inteligencia artificial
-- Novedades Tech
-- Ultimos Gadgets
-- Robots
-
-Busca 4 noticias por tematica, 44 noticias diarias en total.
-
-No escanea archivos, historial, cookies, passwords, tokens ni sesiones. El perfil queda guardado localmente en `interest_profile.json` junto al ejecutable. Si esa carpeta no permite escritura, usa `%LOCALAPPDATA%\Agent News`.
-
-Al buscar noticias, envia a Google News consultas construidas con las tematicas configuradas. No envia archivos, historial, cookies ni sesiones.
-
-## Archivos generados
-
-- `output/agent_news_latest.html`: resumen unico actualizado.
-- `logs/agent_news.log`: registro de ejecuciones.
-- `interest_profile.json`: tematicas configuradas.
-
-## Desinstalar
-
-Ejecutar:
-
-```powershell
-.\desinstalar_agent_news.cmd
-```
+Para desinstalar la tarea programada, ejecutar `desinstalar_agent_news.cmd`.

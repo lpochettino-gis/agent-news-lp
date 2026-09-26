@@ -35,7 +35,7 @@ $Settings = New-ScheduledTaskSettingsSet `
   -AllowStartIfOnBatteries `
   -DontStopIfGoingOnBatteries `
   -MultipleInstances IgnoreNew `
-  -ExecutionTimeLimit (New-TimeSpan -Minutes 30)
+  -ExecutionTimeLimit (New-TimeSpan -Minutes 60)
 
 $Principal = New-ScheduledTaskPrincipal `
   -UserId $Identity `
@@ -48,7 +48,7 @@ Register-ScheduledTask `
   -Trigger $Trigger `
   -Settings $Settings `
   -Principal $Principal `
-  -Description "Genera y abre el resumen diario de noticias a las 08:30." `
+  -Description "Genera y abre el noticiario diario con imagenes a las 08:30." `
   -Force | Out-Null
 
 Write-Host "Tarea registrada: Agent News"
